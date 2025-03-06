@@ -1,0 +1,8 @@
+services:
+  server:
+    build: ./
+    restart: always
+    ports:
+      - "5171:8080"
+    environment:
+      - ConnectionStrings__AppDb=Data Source=./db.sqlite

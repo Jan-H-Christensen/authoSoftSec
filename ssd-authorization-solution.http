@@ -1,0 +1,6 @@
+@ssd_authorization_solution_HostAddress = http://localhost:5171
+
+GET {{ssd_authorization_solution_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
