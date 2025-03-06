@@ -75,7 +75,7 @@ public class ArticleController : ControllerBase
             return NotFound();
         }
 
-        // Check if user is Writer/ and not the author
+        // Check if user is Writer and the author of the article
         if (User.IsInRole("Writer") && entity.Author.UserName != userName)
         {
             return Forbid();
