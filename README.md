@@ -5,7 +5,7 @@ Starter project for authorization workshop.
 ## Getting started
 
 ```sh
-docker compose up --build
+dotnet build
 ```
 
 <http://localhost:5171/swagger/index.html>
