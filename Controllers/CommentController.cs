@@ -39,7 +39,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Subscriber")]
+    [Authorize(Roles = Roles.Subscriber)]
     public ActionResult<CommentDto>  Post([FromBody] CommentFormDto dto)
     {
         var userName = HttpContext.User.Identity?.Name;
@@ -57,7 +57,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpPut(":id")]
-    [Authorize(Roles = "Editor, Subscriber")]
+    [Authorize(Roles = Roles.Editor + "," + Roles.Subscriber)]
     public ActionResult<CommentDto> Put(int id, [FromBody] CommentFormDto dto)
     {
         var userName = HttpContext.User.Identity?.Name;
@@ -70,7 +70,7 @@ public class CommentController : ControllerBase
             return NotFound();
         }
 
-        if (User.IsInRole("Subscriber") && entity.Author.UserName != userName)
+        if (User.IsInRole(Roles.Subscriber) && entity.Author.UserName != userName)
         {
             return Forbid();
         }
@@ -82,7 +82,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpDelete(":id")]
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = Roles.Editor)]
     public ActionResult Delete(int id)
     {
         var entity = db.Comments.Find(id);

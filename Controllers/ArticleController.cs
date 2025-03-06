@@ -43,7 +43,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Writer")]
+    [Authorize(Roles = Roles.Writer)]
     public ActionResult<ArticleDto> Post([FromBody] ArticleFormDto dto)
     {
         var userName = HttpContext.User.Identity?.Name;
@@ -61,7 +61,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpPut(":id")]
-    [Authorize(Roles = "Writer,Editor")]
+    [Authorize(Roles = Roles.Writer + "," + Roles.Editor)]
     public ActionResult<ArticleDto> Put(int id, [FromBody] ArticleFormDto dto)
     {
         var userName = HttpContext.User.Identity?.Name;
@@ -76,7 +76,7 @@ public class ArticleController : ControllerBase
         }
 
         // Check if user is Writer and the author of the article
-        if (User.IsInRole("Writer") && entity.Author.UserName != userName)
+        if (User.IsInRole(Roles.Writer) && entity.Author.UserName != userName)
         {
             return Forbid();
         }
@@ -89,7 +89,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpDelete(":id")]
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = Roles.Editor)]
     public ActionResult Delete(int id)
     {
         var entity = db.Articles.Find(id);
